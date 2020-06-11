@@ -18,12 +18,14 @@ function Register() {
     setParams(params);
   }, []);
 
-  const handleRegistration = ({ email, password }: User) => {
-    Api.register({
+  const handleRegistration = async ({ email, password }: User) => {
+    const registerResult = await Api.register({
       email,
       password,
       params,
     });
+
+    console.log(registerResult);
   };
 
   return (

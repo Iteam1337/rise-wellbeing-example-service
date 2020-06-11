@@ -10,7 +10,7 @@ function Home() {
 function App() {
   return (
     <div className="h-full p-8 mx-auto items-center max-w-screen-lg flex flex-col">
-      <h1 className="font-bold text-2xl mb-6">the Mindfulness App</h1>
+      <h1 className="font-bold text-2xl mb-6">The Mindfulness App</h1>
       <Router>
         <Switch>
           <Route path="/register">

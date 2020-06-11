@@ -5,7 +5,7 @@ import App from "./App";
 test("renders", () => {
   const { getByText } = render(<App />);
 
-  const appTitle = getByText(/the Mindfulness App/i);
+  const appTitle = getByText(/The Mindfulness App/i);
 
   expect(appTitle).toBeInTheDocument();
 });
