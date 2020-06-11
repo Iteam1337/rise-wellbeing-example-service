@@ -1,24 +1,48 @@
-const PLATTFORM_URI = "http://localhost:4000";
+import fetch from "isomorphic-fetch";
 
-module.exports = (req, res) => {
+const APP_ID = "MF123";
+const PLATFORM_URI = "http://localhost:4000";
+
+module.exports = async (req, res) => {
   try {
     const { email, password, params } = req.body;
 
     if (email && password) {
-      const digitalPlatformId = params.find(
+      const { value: digitalPlatformId } = params.find(
         ({ key }) => key === "dp_referall_id"
       );
 
       if (digitalPlatformId) {
         // Platform special-cased sign-up
-        res.status(200).json({
-          status: "success",
-          data: {
-            email,
-            password,
-            digitalPlatformId,
-          },
-        });
+        const { data: validToken } = await fetch(
+          `${PLATFORM_URI}/api/token/${digitalPlatformId}`
+        ).then((res) => res.json());
+
+        if (validToken) {
+          const platformResult = await fetch(
+            `${PLATFORM_URI}/api/registration/${APP_ID}`,
+            {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify({
+                token: digitalPlatformId,
+              }),
+            }
+          ).then((res) => res.json());
+
+          console.debug("Platform Result:", platformResult);
+
+          res.status(200).json({
+            status: "success",
+            data: {
+              email,
+              password,
+              digitalPlatformId,
+            },
+          });
+        } else {
+          throw Error("The token provided was not valid.");
+        }
       } else {
         // Normal sign-up
         res.status(200).json({

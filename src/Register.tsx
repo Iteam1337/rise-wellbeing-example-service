@@ -7,6 +7,7 @@ import type { Parameter, User } from "./types";
 function Register() {
   const [params, setParams] = React.useState<Parameter[]>([]);
 
+  // Simply to grab all query-params and put them into a list of { key: string, value: string }
   React.useEffect(() => {
     let searchParams = new URLSearchParams(window.location.search);
 
