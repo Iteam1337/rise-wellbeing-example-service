@@ -35,6 +35,7 @@ module.exports = async (req, res) => {
           res.status(200).json({
             status: "success",
             data: {
+              signUpType: "RISE",
               email,
               password,
               digitalPlatformId,
@@ -48,6 +49,7 @@ module.exports = async (req, res) => {
         res.status(200).json({
           status: "success",
           data: {
+            signUpType: "REGULAR",
             email,
             password,
           },
